@@ -22,7 +22,7 @@ local function LoadDefaults(currentVersion)
 		shineScale = 4,
 		version = currentVersion,
 	}
-	PrintMsg("OmniCC: Default Settings Loaded.");
+	PrintMsg(default_settings_loaded);
 end
 
 local function LoadVariables()
@@ -32,14 +32,14 @@ local function LoadVariables()
 		LoadDefaults(version);
 	elseif OmniCC.version ~= version then
 		OmniCC.version = version;
-		PrintMsg("OmniCC: Updated to v" .. OmniCC.version);
+		PrintMsg(updated_to .. OmniCC.version);
 	end
 	
 	--this font is created solely for testing if the user's selection is a valid font or not.
 	if not OmniCCFont then
 		CreateFont("OmniCCFont");
 		if not OmniCCFont:SetFont(OmniCC.font, OmniCC.size) then
-			PrintMsg("OmniCC: Saved font is invalid. Reverting to default font.")			
+			PrintMsg(saved_font_is_invalid)			
 			OmniCC.font = STANDARD_TEXT_FONT;
 			if not OmniCCFont:SetFont(OmniCC.font, OmniCC.size) then
 				OmniCC.font = "Fonts\\FRIZQT__.TTF";
@@ -51,16 +51,16 @@ end
 --[[ Slash Command Handler ]]--
 
 local function PrintCommands()
-	PrintMsg("OmniCC Commands:");
-	PrintMsg("/omnicc size <value> - Set font size.  20 is default.");
-	PrintMsg("/omnicc font <value> - Set the font to use.  " .. STANDARD_TEXT_FONT .. " is default.");
-	PrintMsg("/omnicc color <duration> <red> <green> <blue> - Set the color to use for cooldowns of <duration>.  Duration can be vlong, long, medium or short.");
-	PrintMsg("/omnicc scale <duration> <value> - Set the scale to use for cooldowns of <duration>.  Duration can be vlong, long, medium or short.");
-	PrintMsg("/omnicc min <value> - Set the minimum duration (seconds) a cooldown should be to show text.  Default value of 3.");
-	PrintMsg("/omnicc model - Toggles the cooldown model");
-	PrintMsg("/omnicc shine - Toggles a brighter flash on finished cooldowns");
-	PrintMsg("/omnicc shinescale <value> - Sets how big the bright cooldown flash is.  4 is default");
-	PrintMsg("/omnicc reset - Go back to default settings.");
+	PrintMsg(Commands);
+	PrintMsg(omnicc_size);
+	PrintMsg(omnicc_font);
+	PrintMsg(omnicc_color);
+	PrintMsg(omnicc_scale);
+	PrintMsg(omnicc_min);
+	PrintMsg(omnicc_model);
+	PrintMsg(omnicc_shine);
+	PrintMsg(omnicc_shinescale);
+	PrintMsg(omnicc_reset);
 end
 
 SlashCmdList["OmniCCCOMMAND"] = function(msg)
@@ -78,16 +78,16 @@ SlashCmdList["OmniCCCOMMAND"] = function(msg)
 			if(tonumber(args[2]) and tonumber(args[2]) > 0) then
 				OmniCC.size = tonumber(args[2]);
 			else
-				PrintMsg("OmniCC: Invalid font size.");
+				PrintMsg(invalid_font_size);
 			end
 		--/omnicc font <font>
 		elseif cmd == "font" then
 			if args[2] then	
 				if OmniCCFont:SetFont(args[2], OmniCC.size) then
 					OmniCC.font = args[2];
-					PrintMsg("OmniCC: Set font to " .. OmniCC.font);
+					PrintMsg(set_font .. OmniCC.font);
 				else
-					PrintMsg(args[2] .. " is an invalid font.  Using previous selection.");
+					PrintMsg(args[2] .. invalid_font);
 				end
 			end
 		--/omnicc min <size>
@@ -98,10 +98,10 @@ SlashCmdList["OmniCCCOMMAND"] = function(msg)
 		elseif cmd == "model" then
 			if OmniCC.hideModel then
 				OmniCC.hideModel = nil;
-				PrintMsg("OmniCC: Now showing cooldown models.");
+				PrintMsg(showing_cooldown_models);
 			else
 				OmniCC.hideModel = 1;
-				PrintMsg("OmniCC: Now hiding cooldown models.");
+				PrintMsg(hiding_cooldown_models);
 			end
 		elseif cmd == "color" then
 			if args[2] and tonumber(args[3]) and tonumber(args[4]) and tonumber(args[5]) then
@@ -122,10 +122,10 @@ SlashCmdList["OmniCCCOMMAND"] = function(msg)
 		elseif cmd == "shine" then
 			if OmniCC.shine then
 				OmniCC.shine = nil;
-				PrintMsg("OmniCC: Disabled bright cooldown shines.");
+				PrintMsg(disabled_bright);
 			else
 				OmniCC.shine = 1;
-				PrintMsg("OmniCC: Now shining brightly.");
+				PrintMsg(shining_brightly);
 			end
 		elseif cmd == "shinescale" then
 			if args[2] and tonumber(args[2]) then
